@@ -24,4 +24,12 @@ public class UserService {
     public List<Usuario> listAllUsers() {
         return userRepository.findAll();
     }
+
+    public void deleteUserById(Long id) {
+        if (userRepository.existsById(id)) {
+            userRepository.deleteById(id);
+        } else {
+            throw new RuntimeException("Usuário não encontrado!");
+        }
+    }
 }

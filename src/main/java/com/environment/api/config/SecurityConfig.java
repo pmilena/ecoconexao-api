@@ -18,6 +18,7 @@ public class SecurityConfig {
                         .requestMatchers("/h2-console/**").permitAll() // Permitir acesso ao console H2
                         .requestMatchers("/api/users/register").permitAll() // Permitir acesso ao cadastro
                         .requestMatchers("/api/users/list").permitAll() // Permitir acesso à lista de usuários
+                        .requestMatchers("/api/users/delete/{id}").permitAll()
                         .anyRequest().authenticated() // Exigir autenticação para outras rotas
                 )
                 .cors(Customizer.withDefaults())  // Certifique-se de que o CORS está ativado
@@ -25,7 +26,8 @@ public class SecurityConfig {
                         .ignoringRequestMatchers(
                                 new AntPathRequestMatcher("/h2-console/**"),
                                 new AntPathRequestMatcher("/api/users/register"),
-                                new AntPathRequestMatcher("/api/users/list")
+                                new AntPathRequestMatcher("/api/users/list"),
+                                new AntPathRequestMatcher("/api/users/delete/{id}")
                         )
                 )
                 .headers(headers -> headers
