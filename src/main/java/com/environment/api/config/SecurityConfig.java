@@ -14,30 +14,29 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                // Configuração de autorizações
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/h2-console/**").permitAll() // Permitir acesso ao console H2 (banco)
-                        .requestMatchers("/api/users/register").permitAll() //para permitir ao front acessar a url de cadastro
+                        .requestMatchers("/h2-console/**").permitAll() // Permitir acesso ao console H2
+                        .requestMatchers("/api/users/register").permitAll() // Permitir acesso ao cadastro
+                        .requestMatchers("/api/users/list").permitAll() // Permitir acesso à lista de usuários
                         .anyRequest().authenticated() // Exigir autenticação para outras rotas
                 )
-                // Configuração de CORS
-                .cors(Customizer.withDefaults())
-
+                .cors(Customizer.withDefaults())  // Certifique-se de que o CORS está ativado
                 .csrf(csrf -> csrf
                         .ignoringRequestMatchers(
                                 new AntPathRequestMatcher("/h2-console/**"),
-                                new AntPathRequestMatcher("/api/users/register")
+                                new AntPathRequestMatcher("/api/users/register"),
+                                new AntPathRequestMatcher("/api/users/list")
                         )
                 )
-                // Configuração de headers
                 .headers(headers -> headers
                         .frameOptions(frame -> frame.sameOrigin())
                 )
-                // Configuração de login padrão
-                .formLogin(Customizer.withDefaults());
+                .formLogin(Customizer.withDefaults()); // Configuração de login padrão
 
         return http.build();
     }
-    }
+
+
+}
 
 

@@ -3,6 +3,8 @@ package com.environment.api.model;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class UserService {
 
@@ -17,5 +19,9 @@ public class UserService {
 
         // Salvar o usuário no banco de dados
         return userRepository.save(user);
+    }
+
+    public List<Usuario> listAllUsers() {
+        return userRepository.findAll();
     }
 }

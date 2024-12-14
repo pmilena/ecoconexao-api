@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api/users")
@@ -25,5 +27,9 @@ public class UserController {
         }
     }
 
+    @GetMapping("/list")
+    public List<Usuario> getAllUsers() {
+        return userService.listAllUsers();
+    }
 
 }
