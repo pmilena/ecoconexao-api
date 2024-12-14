@@ -1,5 +1,6 @@
 package com.environment.api.model;
 
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -32,4 +33,15 @@ public class UserService {
             throw new RuntimeException("Usuário não encontrado!");
         }
     }
+
+    public void updateUser(Long id, Usuario updatedUser) {
+        Usuario existingUser = userRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Usuário não encontrado!"));
+
+        existingUser.setName(updatedUser.getName());
+        existingUser.setEmail(updatedUser.getEmail());
+        existingUser.setTipoConteudo(updatedUser.getTipoConteudo());
+        userRepository.save(existingUser);
+    }
+
 }

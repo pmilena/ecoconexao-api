@@ -19,15 +19,17 @@ public class SecurityConfig {
                         .requestMatchers("/api/users/register").permitAll() // Permitir acesso ao cadastro
                         .requestMatchers("/api/users/list").permitAll() // Permitir acesso à lista de usuários
                         .requestMatchers("/api/users/delete/{id}").permitAll()
+                        .requestMatchers("/api/users/update/{id}").permitAll()
                         .anyRequest().authenticated() // Exigir autenticação para outras rotas
                 )
-                .cors(Customizer.withDefaults())  // Certifique-se de que o CORS está ativado
+                .cors(Customizer.withDefaults())
                 .csrf(csrf -> csrf
                         .ignoringRequestMatchers(
                                 new AntPathRequestMatcher("/h2-console/**"),
                                 new AntPathRequestMatcher("/api/users/register"),
                                 new AntPathRequestMatcher("/api/users/list"),
-                                new AntPathRequestMatcher("/api/users/delete/{id}")
+                                new AntPathRequestMatcher("/api/users/delete/{id}"),
+                                new AntPathRequestMatcher("/api/users/update/{id}")
                         )
                 )
                 .headers(headers -> headers
