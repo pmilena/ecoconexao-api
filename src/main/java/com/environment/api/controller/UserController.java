@@ -56,9 +56,9 @@ public class UserController {
     }
 
 
-    @GetMapping("/admin")
-    public String adminPage() {
-        return "admin"; // Nome do arquivo HTML sem a extensão
-
+    @GetMapping("/login")
+    public String login() {
+        return "login";  // Retorna o nome da página de login
     }
+
 }

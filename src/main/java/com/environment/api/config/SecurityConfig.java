@@ -15,10 +15,9 @@ public class SecurityConfig {
 
     @Bean
     public UserDetailsService userDetailsService() {
-        // Definir usuário admin com login "admin" e senha "admin"
         return new InMemoryUserDetailsManager(
                 User.withUsername("admin")
-                        .password("{noop}admin")  // {noop} para senha sem criptografia
+                        .password("{noop}admin") // {noop} para senha sem criptografia
                         .roles("ADMIN")
                         .build()
         );
@@ -34,8 +33,8 @@ public class SecurityConfig {
                         .requestMatchers("/api/users/delete/{id}").permitAll()
                         .requestMatchers("/api/users/update/{id}").permitAll()
                         .requestMatchers("/login", "/login.html").permitAll() // Permitir acesso à página de login
-                        .requestMatchers("/admin.html").hasRole("ADMIN")
-                        .anyRequest().authenticated() // Exigir autenticação para outras rotas
+                        .requestMatchers("/admin.html").hasRole("ADMIN") // Protege a página admin.html
+                        .anyRequest().authenticated() // Exige autenticação para outras rotas
                 )
                 .cors(Customizer.withDefaults())
                 .csrf(csrf -> csrf
@@ -48,14 +47,14 @@ public class SecurityConfig {
                         )
                 )
                 .headers(headers -> headers
-                        .frameOptions(frame -> frame.sameOrigin())
+                        .frameOptions(frame -> frame.sameOrigin()) // Permite acessar o console H2
                 )
                 .formLogin(form -> form
-                        .loginPage("/login") // Página personalizada de login
-                        .defaultSuccessUrl("/admin.html", true) // Página para redirecionar após login bem-sucedido
-                        .permitAll()
+                        .loginPage("/login")
+                        .defaultSuccessUrl("/admin.html", true)
                 );
 
         return http.build();
     }
 }
+
