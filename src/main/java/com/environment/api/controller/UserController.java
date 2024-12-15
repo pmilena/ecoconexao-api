@@ -55,4 +55,10 @@ public class UserController {
         }
     }
 
+
+    @GetMapping("/admin")
+    public String adminPage() {
+        return "admin"; // Nome do arquivo HTML sem a extensão
+
+    }
 }

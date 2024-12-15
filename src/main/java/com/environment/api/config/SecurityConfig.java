@@ -33,7 +33,8 @@ public class SecurityConfig {
                         .requestMatchers("/api/users/list").permitAll()
                         .requestMatchers("/api/users/delete/{id}").permitAll()
                         .requestMatchers("/api/users/update/{id}").permitAll()
-                        .requestMatchers("/admin.html").hasRole("ADMIN") // Restrição para admin
+                        .requestMatchers("/login", "/login.html").permitAll() // Permitir acesso à página de login
+                        .requestMatchers("/admin.html").hasRole("ADMIN")
                         .anyRequest().authenticated() // Exigir autenticação para outras rotas
                 )
                 .cors(Customizer.withDefaults())
@@ -50,8 +51,9 @@ public class SecurityConfig {
                         .frameOptions(frame -> frame.sameOrigin())
                 )
                 .formLogin(form -> form
-                        .loginPage("/login") // Página de login personalizada
-                        .permitAll() // Permitir acesso a todos para a página de login
+                        .loginPage("/login") // Página personalizada de login
+                        .defaultSuccessUrl("/admin.html", true) // Página para redirecionar após login bem-sucedido
+                        .permitAll()
                 );
 
         return http.build();
